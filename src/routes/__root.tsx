@@ -10,7 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { ADSENSE_CLIENT } from "../lib/ads";
+import { ADSENSE_CLIENT, ADS_CONFIGURED } from "../lib/ads";
 import { loadAnalytics, trackPageView } from "../lib/analytics";
 import { CookieConsent } from "../components/CookieConsent";
 import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from "../lib/site";
@@ -132,8 +132,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
 
-  // Reklam script'i sayfa yüklendikten sonra eklenir.
+  // Reklam script'i sayfa yüklendikten sonra eklenir. AdSense henüz ayarlanmadıysa
+  // (placeholder pub-id) hiç yüklenmez — aksi halde boşuna Google'ın izleme/fraud
+  // pikselleri (sodar, gen_204) sayfayı yavaşlatır.
   useEffect(() => {
+    if (!ADS_CONFIGURED) return;
     if (document.querySelector("script[data-adsense]")) return;
     const el = document.createElement("script");
     el.async = true;
