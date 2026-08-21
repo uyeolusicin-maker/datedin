@@ -1,5 +1,6 @@
 import { type CvData } from "@/lib/datedin-data";
 import { toxicityLabel } from "@/lib/calculateToxicity";
+import { characterAnalysis } from "@/lib/characterAnalysis";
 
 export function CvCard({ data }: { data: CvData }) {
   const score = data.score;
@@ -65,31 +66,13 @@ export function CvCard({ data }: { data: CvData }) {
         </div>
       )}
 
-      {data.greenFlags.length > 0 && (
-        <div className="mt-5 border-t border-border pt-4">
-          <h2 className="mb-2.5 text-[11px] font-semibold uppercase tracking-widest text-success">
-            Green Flags
-          </h2>
-          <div className="flex flex-wrap gap-1.5">
-            {data.greenFlags.map((f) => (
-              <span
-                key={f}
-                className="rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-[11px] leading-snug"
-              >
-                {f}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="mt-5 border-t border-border pt-4">
         <h2 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Referans
+          Karakter Analizi
         </h2>
-        <blockquote className="border-l-2 border-border pl-3 text-[12.5px] italic leading-relaxed text-muted-foreground">
-          {data.reference}
-        </blockquote>
+        <p className="text-[12.5px] italic leading-relaxed text-muted-foreground">
+          {characterAnalysis(score)}
+        </p>
       </div>
 
       <p className="mt-5 border-t border-border pt-3 text-center text-[10px] tracking-wide text-muted-foreground">

@@ -1,10 +1,9 @@
 import { RELATIONSHIP_STATUSES, type CvDraft } from "./datedin-data";
 
-const BASE_SCORE = 12;
-const STATUS_WEIGHT_FACTOR = 0.9;
-const SKILL_AVERAGE_FACTOR = 0.35;
-const RED_FLAG_WEIGHT = 6.5;
-const GREEN_FLAG_WEIGHT = 4.5;
+const BASE_SCORE = 10;
+const STATUS_WEIGHT_FACTOR = 0.7;
+const SKILL_AVERAGE_FACTOR = 0.28;
+const RED_FLAG_SQRT_FACTOR = 13;
 const JITTER_RANGE = 4;
 const MIN_SCORE = 6;
 const MAX_SCORE = 99;
@@ -15,10 +14,14 @@ function averageSkillValue(skills: CvDraft["skills"]): number {
 }
 
 /**
- * Durum ağırlığı + ortalama yetenek yüzdesi + red/green flag sayısına göre
- * bir taban skor üretir, üstüne ±4 puanlık küçük bir "gün ruh hali" varyasyonu
- * ekler. Skor CV oluşturulurken bir kere hesaplanıp CvData.score içine
- * yazılır — paylaşılan kartlar bu değeri kullanır, tekrar hesaplamaz.
+ * Durum ağırlığı + ortalama yetenek yüzdesi + red flag sayısına göre bir
+ * taban skor üretir, üstüne ±4 puanlık küçük bir "gün ruh hali" varyasyonu
+ * ekler. Red flag sayısı karekökle ağırlıklandırılır (ilk birkaç flag skoru
+ * hızlı yükseltir, sonrakiler gittikçe daha az etki eder) — böylece "en kötü"
+ * arketip + birkaç flag seçimi bile otomatik olarak tavana (99) yapışmaz,
+ * sadece gerçekten uç seçimler oraya ulaşır. Skor CV oluşturulurken bir kere
+ * hesaplanıp CvData.score içine yazılır — paylaşılan kartlar bu değeri
+ * kullanır, tekrar hesaplamaz.
  */
 export function calculateToxicity(draft: CvDraft): number {
   let score = BASE_SCORE;
@@ -27,8 +30,7 @@ export function calculateToxicity(draft: CvDraft): number {
   if (status) score += status.weight * STATUS_WEIGHT_FACTOR;
 
   score += averageSkillValue(draft.skills) * SKILL_AVERAGE_FACTOR;
-  score += draft.redFlags.length * RED_FLAG_WEIGHT;
-  score -= draft.greenFlags.length * GREEN_FLAG_WEIGHT;
+  score += Math.sqrt(draft.redFlags.length) * RED_FLAG_SQRT_FACTOR;
 
   score += (Math.random() * 2 - 1) * JITTER_RANGE;
 

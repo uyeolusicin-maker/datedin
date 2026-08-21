@@ -66,7 +66,6 @@ function Index() {
               trackEvent("cv_generated", {
                 status: cv.status,
                 red_flags: cv.redFlags.length,
-                green_flags: cv.greenFlags.length,
                 score: cv.score,
               });
             }}

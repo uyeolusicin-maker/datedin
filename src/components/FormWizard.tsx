@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  RELATIONSHIP_STATUSES,
-  SKILLS,
-  RED_FLAGS,
-  GREEN_FLAGS,
-  type CvDraft,
-} from "@/lib/datedin-data";
+import { RELATIONSHIP_STATUSES, SKILLS, RED_FLAGS, type CvDraft } from "@/lib/datedin-data";
 
 const STEPS = ["Temel Bilgiler", "Yetenekler", "Rozetler"];
 
@@ -35,19 +29,12 @@ function Pill({
   active,
   onClick,
   children,
-  tone,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
-  tone: "red" | "green" | "neutral";
 }) {
-  const activeCls =
-    tone === "red"
-      ? "border-primary/70 bg-primary/15 text-foreground"
-      : tone === "green"
-        ? "border-success/70 bg-success/15 text-foreground"
-        : "border-primary/70 bg-primary/15 text-foreground";
+  const activeCls = "border-primary/70 bg-primary/15 text-foreground";
   return (
     <button
       type="button"
@@ -68,8 +55,6 @@ export function FormWizard({ onSubmit }: { onSubmit: (data: CvDraft) => void }) 
   const [status, setStatus] = useState(RELATIONSHIP_STATUSES[0]!.label);
   const [skills, setSkills] = useState<{ name: string; value: number }[]>([]);
   const [redFlags, setRedFlags] = useState<string[]>([]);
-  const [greenFlags, setGreenFlags] = useState<string[]>([]);
-  const [reference, setReference] = useState("");
 
   const toggle = (list: string[], set: (v: string[]) => void, item: string) =>
     set(list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
@@ -93,8 +78,6 @@ export function FormWizard({ onSubmit }: { onSubmit: (data: CvDraft) => void }) 
       status,
       skills,
       redFlags,
-      greenFlags,
-      reference: reference.trim() || "Cidden iyi biri ama mesajlarıma 3 gün sonra dönüyor.",
     });
   };
 
@@ -152,7 +135,6 @@ export function FormWizard({ onSubmit }: { onSubmit: (data: CvDraft) => void }) 
             {SKILLS.map((s) => (
               <Pill
                 key={s}
-                tone="neutral"
                 active={skills.some((x) => x.name === s)}
                 onClick={() => toggleSkill(s)}
               >
@@ -195,7 +177,6 @@ export function FormWizard({ onSubmit }: { onSubmit: (data: CvDraft) => void }) 
               {RED_FLAGS.map((f) => (
                 <Pill
                   key={f}
-                  tone="red"
                   active={redFlags.includes(f)}
                   onClick={() => toggle(redFlags, setRedFlags, f)}
                 >
@@ -203,32 +184,6 @@ export function FormWizard({ onSubmit }: { onSubmit: (data: CvDraft) => void }) 
                 </Pill>
               ))}
             </div>
-          </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-success">Green Flags</h3>
-            <div className="flex flex-wrap gap-2">
-              {GREEN_FLAGS.map((f) => (
-                <Pill
-                  key={f}
-                  tone="green"
-                  active={greenFlags.includes(f)}
-                  onClick={() => toggle(greenFlags, setGreenFlags, f)}
-                >
-                  {f}
-                </Pill>
-              ))}
-            </div>
-          </div>
-          <div>
-            <label className="mb-2 block text-sm text-muted-foreground">Referans Cümlesi</label>
-            <textarea
-              rows={3}
-              maxLength={280}
-              className={`${inputCls} py-3 leading-relaxed`}
-              value={reference}
-              onChange={(e) => setReference(e.target.value)}
-              placeholder="Örn: Beraber çalıştık, insan olarak harika ama mesajlara 3 gün sonra dönüyor."
-            />
           </div>
         </div>
       )}

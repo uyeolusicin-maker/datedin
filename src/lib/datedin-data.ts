@@ -41,7 +41,7 @@ export const SKILLS = [
   "Yanlış Kişiye Bağlanma",
   "Pasif Agresif İletişim",
   "Toksiklik Seviyesi",
-  "Fake Hesap (Finsta) Yönetimi",
+  "Fake Hesap",
   "Date'te Hesabı Ödetmeme Çabası",
   "İlk Buluşmada Gelecek Planlama",
   "Sürekli 'Ben Zaten Biliyordum' Hissi",
@@ -55,48 +55,26 @@ export const RED_FLAGS = [
   "Story'sine bakıp mesaja cevap vermez",
   "Love Bombing yapar",
   "Grup sohbetine sorarak yazar",
-  "Kedisini/köpeğini manipülasyon kozu yapar",
-  "Garsona kötü davranır",
   "Insta takip ettiklerinin %90'ı karşı cins",
   "Burcunu sorup yargılar",
-  "Hesap gelince tuvalete kaçar",
   "Soğuk yapıp ilgini test eder",
   "Hesabında hiç kendi fotoğrafı yok",
   "'Ben ilişki insanı değilim' der",
   "Konuyu 6 ay öncesine çeker",
-  "Snapchat kullanıyor",
-  "İcraat yok sürekli 'hallederiz' der",
+  "Snap Score'u 1 milyondan fazla",
   "Gaslighting yapar",
-  "Profilinde 'Sapım ama keyfim yerinde' yazar",
   "Konumunu asla paylaşmaz",
   "Dışarı çıkarken haber vermez",
-];
-
-export const GREEN_FLAGS = [
-  "Küçük detayları hatırlar",
-  "Terapiye gidiyor",
-  "Müzik zevki mükemmel",
-  "Sorun değil hallederiz der",
-  "Arkadaşlarının yanında seni över",
-  "Açık iletişim kurar",
-  "Geç dönecekse haber verir",
-  "Garsona kibar davranır",
-  "Hesabı paylaşmayı teklif eder",
-  "Sağlıklı ilişkileri var",
-  "Telefona bakmaz seni dinler",
-  "Sevgi dilini öğrenir",
-  "Kendi hobileri var",
-  "Günün nasıl geçti diye sorar",
-  "Sınırlarına saygı duyar",
-  "Seni güldürür",
-  "Çözüm odaklıdır",
-  "Hayvanları sever",
-  "Özür dilemeyi bilir",
-  "ChatGPT'ye değil sana danışır",
-  "Ortak playlist yapmayı sever",
-  "Konumunu paylaşmaktan çekinmez",
-  "Buluşma öncesi nerede olduğunu haber verir",
-  "Sosyal medyada seni gizlemez, gururla paylaşır",
+  "ChatGPT'ye yazdırdığı belli olan mesajlar atar",
+  "Sosyal medyada seni asla paylaşmaz, gizler",
+  "Arkadaşlarının yanında senden hiç bahsetmez",
+  "Özür dilemeyi bilmez, hep haklı çıkar",
+  "Çözüm üretmek yerine sürekli suçlar",
+  "Günden güne soğuk ya da sıcak davranır",
+  "Aktif olduğu belli ama cevap vermez",
+  "Önemli şeyleri unutur",
+  "Kendini durmadan över",
+  "Telefon şifresini söylemez",
 ];
 
 export type CvData = {
@@ -104,8 +82,6 @@ export type CvData = {
   status: string;
   skills: { name: string; value: number }[];
   redFlags: string[];
-  greenFlags: string[];
-  reference: string;
   score: number;
 };
 

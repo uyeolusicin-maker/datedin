@@ -2,7 +2,6 @@ import type { CvData } from "./datedin-data";
 import { SITE_URL } from "./site";
 
 const MAX_NAME_LENGTH = 40;
-const MAX_REFERENCE_LENGTH = 280;
 const MAX_STATUS_LENGTH = 120;
 const MAX_SKILLS = 4;
 const MAX_FLAGS = 30;
@@ -48,9 +47,6 @@ function isValidCvData(value: unknown): value is CvData {
         typeof (s as { value: unknown }).value === "number",
     ) &&
     isFlagList(v["redFlags"]) &&
-    isFlagList(v["greenFlags"]) &&
-    typeof v["reference"] === "string" &&
-    v["reference"].length <= MAX_REFERENCE_LENGTH &&
     typeof v["score"] === "number" &&
     Number.isFinite(v["score"])
   );
